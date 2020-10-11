@@ -20,6 +20,7 @@ const multiply = document.getElementById('multiply')
 const plusminus = document.getElementById('plusminus')
 const dot = document.getElementById('dot')
 const eqval = document.getElementById('eqval')
+let condition = false
 // function description
 const plmi = () =>{
     if(result.value>0){
@@ -35,6 +36,7 @@ const point = () =>{
     else{result.value = result.value}
 }
 const calc = () => {
+    condition = true
     const value = output.innerHTML + result.value
     if (result.value =="result is undefined"){result.value ="0"}
     else if (result.value==""){result.value="0"}
@@ -46,12 +48,14 @@ const calc = () => {
     output.innerHTML = ""
 }
 const number = (num) => {
-    if (num=="0" && result.value=="0"){
-        result.value=result.value}
-    else if (result.value=="0" && num!="0"){
-        result.value=num
+    if(condition){
+        result.value= num
+        condition=false
     }
-    else{result.value +=num;}
+    else{
+    if (num=="0" && result.value=="0"){result.value=result.value}
+    else if (result.value=="0" && num!="0"){result.value=num}
+    else{result.value +=num;}}
 }
 const delAct = (index) =>{
     switch(index) {
@@ -68,6 +72,7 @@ const delAct = (index) =>{
 }
 }
 const action = (element) => {
+
     if (result.value=="result is undefined" || result.value=="cannot be divided"){
     result.value=""
     output.innerHTML=""}
@@ -81,7 +86,8 @@ const action = (element) => {
         const act = element.innerHTML
         const num =result.value
         output.innerHTML += (result.value += ` ${act}`);
-        result.value = "0";
+        result.value = num;
+        condition=true
 }
 }
 // function application
