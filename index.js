@@ -21,8 +21,10 @@ const plusminus = document.getElementById('plusminus')
 const dot = document.getElementById('dot')
 const eqval = document.getElementById('eqval')
 let condition = false
+let tixa = true // успокоительная переменная
 // function description
 const plmi = () =>{
+if(tixa){
     if(result.value>0){
         result.value = "-" + result.value
     }
@@ -30,62 +32,94 @@ const plmi = () =>{
         result.value = Math.abs(result.value)
     }
 }
+tixa=true
+}
 const point = () =>{
+if(tixa){
     if (result.value.indexOf('.')==-1 && result.value!=""){
-    result.value = result.value + "."}
-    else{result.value = result.value}
+    result.value = result.value + "."
+    }
+    else{
+        result.value = result.value
+    }
+}
+tixa=true
 }
 const calc = () => {
     condition = true
     const value = output.innerHTML + result.value
-    if (result.value =="result is undefined"){result.value ="0"}
-    else if (result.value==""){result.value="0"}
-    else if (eval(value)==Infinity){result.value = "cannot be divided"}
-    else if (isNaN(eval(value))){result.value = "result is undefined"}
-    else if (eval(value)==undefined){result.value = "0"}
-    else{result.value = (Math.round(eval(value)*10000000)/10000000)}
-    if (result.value=="0"){result.value=""}
+    if (result.value =="result is undefined"){
+        result.value ="0"
+    }
+    else if (result.value==""){
+        result.value="0"
+    }
+    else if (eval(value)==Infinity){
+        result.value = "cannot be divided"
+    }
+    else if (isNaN(eval(value))){
+        result.value = "result is undefined"
+    }
+    else if (eval(value)==undefined){
+        result.value = "0"
+    }
+    else{
+        result.value = (Math.round(eval(value)*10000000)/10000000)
+    }
     output.innerHTML = ""
 }
 const number = (num) => {
+if(tixa){
     if(condition){
         result.value= num
         condition=false
     }
     else{
-    if (num=="0" && result.value=="0"){result.value=result.value}
-    else if (result.value=="0" && num!="0"){result.value=num}
-    else{result.value +=num;}}
+    if (num=="0" && result.value=="0"){
+        result.value=result.value
+    }
+    else if (result.value=="0" && num!="0"){
+        result.value=num
+    }
+    else{
+        result.value +=num;
+    }
+    }
+
+}
+tixa=true
 }
 const delAct = (index) =>{
+if(tixa){
     switch(index) {
         case 0:
             result.value = ""
           break
         case 1:
-            result.value = ""
+            result.value = "0"
             output.innerHTML = ""
           break
         case 2: 
         result.value = result.value.slice(0,-1)
           break
+        }
 }
+tixa=true
 }
 const action = (element) => {
-
     if (result.value=="result is undefined" || result.value=="cannot be divided"){
     result.value=""
     output.innerHTML=""}
     if (result.value==""){
         result.value = 0
         const act = element.innerHTML
-        output.innerHTML += (result.value += ` ${act}`);
+        output.innerHTML += (result.value += ` ${act}`)
         result.value = "0";
 }
     else {
         const act = element.innerHTML
         const num =result.value
-        output.innerHTML += (result.value += ` ${act}`);
+        output.innerHTML += (result.value += ` ${act}`)
         result.value = num;
         condition=true
 }
@@ -111,23 +145,31 @@ plusminus.addEventListener('click',() => plmi())
 //keyboard input
 document.addEventListener('keydown', function(event) {
     if((event.key >= 0) && (event.key <= 9)){
-      number(event.key)}
-})
-document.addEventListener('keydown', function(event) {
-    if (event.key == "+" ){action(arraytwo[0])} 
-    else if(event.key == "-" ){action(arraytwo[1])}
-    else if(event.key == "*" ){action(arraytwo[2])}
-    else if(event.key == "/" ){action(arraytwo[3])}
-})
-document.addEventListener('keydown', function(event) {
-    if (event.key == "Backspace" ){delAct(2)} 
-    else if (event.key == "Delete" ){delAct(0)}
-})
-document.addEventListener('keydown', function(event) {
-    if (event.key == "Enter" ){calc()}
-
-})
-document.addEventListener('keydown', function(event) {
-    if (event.key == "." ){point()}
-
+        number(event.key)
+        }
+      else if (event.key == "+"){
+          action(arraytwo[0])
+        } 
+      else if(event.key == "-"){
+          action(arraytwo[1])
+        }
+      else if(event.key == "*"){
+          action(arraytwo[2])
+        }
+      else if(event.key == "/"){
+          action(arraytwo[3])
+        }
+      else if (event.key == "Backspace"){
+          delAct(2)
+        } 
+      else if (event.key == "Delete"){
+          delAct(0)
+        }
+      else if (event.key == "Enter"){
+          calc()
+          tixa=false
+        }
+      else if (event.key == "." ){
+          point()
+        }
 })
