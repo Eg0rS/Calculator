@@ -21,10 +21,8 @@ const plusminus = document.getElementById('plusminus')
 const dot = document.getElementById('dot')
 const eqval = document.getElementById('eqval')
 let condition = false
-let tixa = true // успокоительная переменная
 // function description
 const plmi = () =>{
-if(tixa){
     if(result.value>0){
         result.value = "-" + result.value
     }
@@ -32,18 +30,14 @@ if(tixa){
         result.value = Math.abs(result.value)
     }
 }
-tixa=true
-}
 const point = () =>{
-if(tixa){
     if (result.value.indexOf('.')==-1 && result.value!=""){
     result.value = result.value + "."
     }
     else{
         result.value = result.value
     }
-}
-tixa=true
+
 }
 const calc = () => {
     condition = true
@@ -69,7 +63,6 @@ const calc = () => {
     output.innerHTML = ""
 }
 const number = (num) => {
-if(tixa){
     if(condition){
         result.value= num
         condition=false
@@ -84,13 +77,9 @@ if(tixa){
     else{
         result.value +=num;
     }
-    }
-
 }
-tixa=true
 }
 const delAct = (index) =>{
-if(tixa){
     switch(index) {
         case 0:
             result.value = ""
@@ -103,8 +92,6 @@ if(tixa){
         result.value = result.value.slice(0,-1)
           break
         }
-}
-tixa=true
 }
 const action = (element) => {
     if (result.value=="result is undefined" || result.value=="cannot be divided"){
@@ -167,7 +154,7 @@ document.addEventListener('keydown', function(event) {
         }
       else if (event.key == "Enter"){
           calc()
-          tixa=false
+          event.preventDefault()
         }
       else if (event.key == "." ){
           point()
