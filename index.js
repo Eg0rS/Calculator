@@ -21,6 +21,7 @@ const plusminus = document.getElementById('plusminus')
 const dot = document.getElementById('dot')
 const eqval = document.getElementById('eqval')
 let condition = false
+let lastnum= 0
 // function description
 const plmi = () =>{
     if(result.value>0){
@@ -88,28 +89,39 @@ const delAct = (index) =>{
             result.value = "0"
             output.innerHTML = ""
           break
-        case 2: 
+        case 2:
         result.value = result.value.slice(0,-1)
           break
         }
 }
+const nazvanie = () => {
+}
 const action = (element) => {
-    if (result.value=="result is undefined" || result.value=="cannot be divided"){
+    if (result.value==lastnum){
+        result.value=result.value
+        output.innerHTML=output.innerHTML
+    }
+    else if (result.value=="result is undefined" || result.value=="cannot be divided"){
     result.value=""
     output.innerHTML=""}
-    if (result.value==""){
+    else if (result.value=="0" && output.innerHTML!=""){
+        output.innerHTML=output.innerHTML
+        result.value=0
+    }
+    else if (result.value==""){
         result.value = 0
         const act = element.innerHTML
         output.innerHTML += (result.value += ` ${act}`)
         result.value = "0";
-}
+    }
     else {
         const act = element.innerHTML
         const num =result.value
-        output.innerHTML += (result.value += ` ${act}`)
+        output.innerHTML += (result.value += ` ${act} `)
         result.value = num;
         condition=true
-}
+        lastnum=result.value
+    }
 }
 // function application
 const array = [
