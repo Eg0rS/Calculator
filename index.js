@@ -32,13 +32,18 @@ const plmi = () =>{
     }
 }
 const point = () =>{
+    if (condition==true){
+        result.value="0."
+        condition=false
+    }
+    else{
     if (result.value.indexOf('.')==-1 && result.value!=""){
     result.value = result.value + "."
     }
     else{
         result.value = result.value
     }
-
+    }
 }
 const calc = () => {
     condition = true
@@ -143,7 +148,7 @@ dot.addEventListener('click',() => point())
 plusminus.addEventListener('click',() => plmi())
 //keyboard input
 document.addEventListener('keydown', function(event) {
-    if((event.key >= 0) && (event.key <= 9)){
+     if((event.key >= 0) && (event.key <= 9)){
         number(event.key)
         }
       else if (event.key == "+"){
